@@ -8,6 +8,8 @@ import { UserButton } from "@clerk/nextjs";
 import { UploadButton } from "~/components/uploadthing";
 import { useRouter } from "next/navigation";
 
+const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+
 export default function DriveContents(props: {
   files: (typeof files_table.$inferSelect)[];
   folders: (typeof folders_table.$inferSelect)[];
@@ -37,7 +39,13 @@ export default function DriveContents(props: {
             ))}
           </div>
           <div>
-            <UserButton />
+            {DEMO_MODE ? (
+              <span className="rounded-full bg-neutral-700 px-3 py-1 text-xs text-neutral-300">
+                Demo
+              </span>
+            ) : (
+              <UserButton />
+            )}
           </div>
         </div>
 
