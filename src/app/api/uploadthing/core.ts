@@ -6,6 +6,9 @@ import { MUTATIONS, QUERIES } from "~/server/db/queries";
 
 const f = createUploadthing();
 
+const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+const DEMO_USER_ID = "demo_developer_user";
+
 export const ourFileRouter = {
   driveUploader: f({
     blob: {
@@ -19,18 +22,24 @@ export const ourFileRouter = {
       }),
     )
     .middleware(async ({ input }) => {
-      const user = await auth();
+      let userId: string;
 
-      if (!user.userId) throw new UploadThingError("Unauthorized");
+      if (DEMO_MODE) {
+        userId = DEMO_USER_ID;
+      } else {
+        const user = await auth();
+        if (!user.userId) throw new UploadThingError("Unauthorized");
+        userId = user.userId;
+      }
 
       const folder = await QUERIES.getFolderById(input.folderId);
 
       if (!folder) throw new UploadThingError("Folder not found");
 
-      if (folder.ownerId !== user.userId)
+      if (!DEMO_MODE && folder.ownerId !== userId)
         throw new UploadThingError("Unauthorized");
 
-      return { userId: user.userId, parentId: input.folderId };
+      return { userId, parentId: input.folderId };
     })
     .onUploadComplete(async ({ metadata, file }) => {
       await MUTATIONS.createFile({
