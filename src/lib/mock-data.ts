@@ -1,3 +1,6 @@
+export const DEMO_USER_ID = "demo_developer_user";
+export const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+
 export const mockFolders = [
   { id: "1", name: "Documents", type: "folder", parent: "root" },
   { id: "2", name: "Images", type: "folder", parent: "root" },
