@@ -9,10 +9,20 @@ import { cookies } from "next/headers";
 
 const utApi = new UTApi();
 
+const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
+const DEMO_USER_ID = "demo_developer_user";
+
 export async function deleteFile(fileId: number) {
-  const session = await auth();
-  if (!session.userId) {
-    return { error: "Unauthorized" };
+  let userId: string;
+
+  if (DEMO_MODE) {
+    userId = DEMO_USER_ID;
+  } else {
+    const session = await auth();
+    if (!session.userId) {
+      return { error: "Unauthorized" };
+    }
+    userId = session.userId;
   }
 
   const [file] = await db
@@ -21,7 +31,7 @@ export async function deleteFile(fileId: number) {
     .where(
       and(
         eq(files_table.id, fileId),
-        eq(files_table.ownerId, session.userId),
+        eq(files_table.ownerId, userId),
       ),
     );
 
