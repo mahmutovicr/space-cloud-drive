@@ -45,7 +45,7 @@ export default function HomePage() {
           action={async () => {
             "use server";
             const session = await auth();
-            if (!session.userId) return redirect("/sign-in");
+            if (!session.userId) return redirect("/sign-up");
             return redirect("/drive");
           }}
         >
