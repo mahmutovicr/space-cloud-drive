@@ -1,5 +1,5 @@
-import { auth } from "@clerk/nextjs/server";
 import { redirect } from "next/navigation";
+import { auth } from "@clerk/nextjs/server";
 import { Button } from "~/components/ui/button";
 import { DEMO_MODE } from "~/lib/mock-data";
 
@@ -41,22 +41,14 @@ export default function HomePage() {
       </p>
 
       <div className="flex flex-col items-center gap-3">
-        <form
-          action={async () => {
-            "use server";
-            const session = await auth();
-            if (!session.userId) return redirect("/sign-up");
-            return redirect("/drive");
-          }}
-        >
+        <a href="https://amusing-tarpon-96.accounts.dev/sign-in">
           <Button
             size="lg"
-            type="submit"
             className="w-40 border border-neutral-700 bg-neutral-800 text-white transition-colors hover:bg-neutral-700"
           >
             Get Started
           </Button>
-        </form>
+        </a>
 
         {DEMO_MODE && (
           <form
