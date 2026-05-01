@@ -4,11 +4,8 @@ import { ChevronRight } from "lucide-react";
 import { FileRow, FolderRow } from "./file-row";
 import type { files_table, folders_table } from "~/server/db/schema";
 import Link from "next/link";
-import { UserButton } from "@clerk/nextjs";
 import { UploadButton } from "~/components/uploadthing";
 import { useRouter } from "next/navigation";
-
-const DEMO_MODE = process.env.NEXT_PUBLIC_DEMO_MODE === "true";
 
 export default function DriveContents(props: {
   files: (typeof files_table.$inferSelect)[];
@@ -29,23 +26,16 @@ export default function DriveContents(props: {
             {props.parents.map((folder) => (
               <div key={folder.id} className="flex items-center">
                 <ChevronRight className="mx-2 text-gray-500" size={16} />
-                <Link
-                  href={`/f/${folder.id}`}
-                  className="text-gray-300 hover:text-white"
-                >
+                <Link href={`/f/${folder.id}`} className="text-gray-300 hover:text-white">
                   {folder.name}
                 </Link>
               </div>
             ))}
           </div>
           <div>
-            {DEMO_MODE ? (
-              <span className="rounded-full bg-neutral-700 px-3 py-1 text-xs text-neutral-300">
-                Demo
-              </span>
-            ) : (
-              <UserButton />
-            )}
+            <span className="rounded-full bg-neutral-700 px-3 py-1 text-xs text-neutral-300">
+              Demo
+            </span>
           </div>
         </div>
 
@@ -71,9 +61,7 @@ export default function DriveContents(props: {
         <div className="mt-6">
           <UploadButton
             endpoint="driveUploader"
-            onClientUploadComplete={() => {
-              navigate.refresh();
-            }}
+            onClientUploadComplete={() => { navigate.refresh(); }}
             input={{ folderId: props.currentFolderId }}
           />
         </div>
