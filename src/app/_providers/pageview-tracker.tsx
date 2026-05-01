@@ -3,31 +3,17 @@
 import { usePathname, useSearchParams } from "next/navigation";
 import { useEffect } from "react";
 import { usePostHog } from "posthog-js/react";
-import { useUser } from "@clerk/nextjs";
 
-export default function PostHogPageView(): null {
-  const posthog = usePostHog();
-  const userInfo = useUser();
-
-  useEffect(() => {
-    if (userInfo.user?.id) {
-      posthog.identify(userInfo.user.id, {
-        email: userInfo.user.emailAddresses[0]?.emailAddress,
-      });
-    } else {
-      posthog.reset();
-    }
-  }, [posthog, userInfo.user]);
-
+export default function PostHogPageView() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const posthog = usePostHog();
 
   useEffect(() => {
     if (pathname && posthog) {
       let url = window.origin + pathname;
-      if (searchParams.toString()) {
-        url = url + `?${searchParams.toString()}`;
-      }
+      const search = searchParams.toString();
+      if (search) url += "?" + search;
       posthog.capture("$pageview", { $current_url: url });
     }
   }, [pathname, searchParams, posthog]);
