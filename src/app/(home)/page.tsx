@@ -1,7 +1,5 @@
 import { redirect } from "next/navigation";
-import { auth } from "@clerk/nextjs/server";
 import { Button } from "~/components/ui/button";
-import { DEMO_MODE } from "~/lib/mock-data";
 
 function OrbitIcon({ className }: { className?: string }) {
   return (
@@ -50,22 +48,20 @@ export default function HomePage() {
           </Button>
         </a>
 
-        {DEMO_MODE && (
-          <form
-            action={async () => {
-              "use server";
-              return redirect("/drive");
-            }}
+        <form
+          action={async () => {
+            "use server";
+            return redirect("/drive");
+          }}
+        >
+          <Button
+            size="lg"
+            type="submit"
+            className="w-40 border border-neutral-700 bg-neutral-800 text-white transition-colors hover:bg-neutral-700"
           >
-            <Button
-              size="lg"
-              type="submit"
-              className="w-40 border border-neutral-700 bg-neutral-800 text-white transition-colors hover:bg-neutral-700"
-            >
-              Try it Now
-            </Button>
-          </form>
-        )}
+            Try it Now
+          </Button>
+        </form>
       </div>
 
       <footer className="mt-16 text-sm text-neutral-500">
