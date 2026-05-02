@@ -24,7 +24,7 @@ export function FileRow(props: { file: typeof files_table.$inferSelect }) {
   return (
     <li className="border-b border-gray-700 px-4 py-3 last:border-b-0 sm:px-6 sm:py-4">
       <div className="flex items-center justify-between gap-2 sm:hidden">
-        
+        <a
           href={file.url}
           className="flex min-w-0 items-center gap-2 text-gray-100 hover:text-blue-400"
           target="_blank"
@@ -49,7 +49,7 @@ export function FileRow(props: { file: typeof files_table.$inferSelect }) {
 
       <div className="hidden grid-cols-12 items-center gap-4 sm:grid">
         <div className="col-span-6 flex min-w-0 items-center">
-          
+          <a
             href={file.url}
             className="flex min-w-0 items-center text-gray-100 hover:text-blue-400"
             target="_blank"
