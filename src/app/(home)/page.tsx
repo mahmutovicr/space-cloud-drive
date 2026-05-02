@@ -27,22 +27,22 @@ function OrbitIcon({ className }: { className?: string }) {
 export default function HomePage() {
   return (
     <>
-      <h1 className="mb-4 flex items-center justify-center gap-3 text-5xl font-bold md:text-6xl">
+      <h1 className="mb-4 flex items-center justify-center gap-2 text-4xl font-bold sm:gap-3 sm:text-5xl md:text-6xl">
         <span className="bg-gradient-to-r from-neutral-200 to-neutral-400 bg-clip-text text-transparent">
           Space
         </span>
-        <OrbitIcon className="h-12 w-12 text-neutral-300 md:h-14 md:w-14" />
+        <OrbitIcon className="h-10 w-10 text-neutral-300 sm:h-12 sm:w-12 md:h-14 md:w-14" />
       </h1>
 
-      <p className="mx-auto mb-8 max-w-md text-xl text-neutral-400 md:text-2xl">
+      <p className="mx-auto mb-8 max-w-xs px-2 text-lg text-neutral-400 sm:max-w-md sm:text-xl md:text-2xl">
         Secure, fast and easy file storage for the modern web
       </p>
 
-      <div className="flex flex-col items-center gap-3">
+      <div className="flex flex-col items-center gap-3 sm:flex-row sm:justify-center">
         <a href="https://amusing-tarpon-96.accounts.dev/sign-in">
           <Button
             size="lg"
-            className="w-40 border border-neutral-700 bg-neutral-800 text-white transition-colors hover:bg-neutral-700"
+            className="w-44 border border-neutral-700 bg-neutral-800 text-white transition-colors hover:bg-neutral-700 sm:w-40"
           >
             Get Started
           </Button>
@@ -57,7 +57,7 @@ export default function HomePage() {
           <Button
             size="lg"
             type="submit"
-            className="w-40 border border-neutral-700 bg-neutral-800 text-white transition-colors hover:bg-neutral-700"
+            className="w-44 border border-neutral-700 bg-neutral-800 text-white transition-colors hover:bg-neutral-700 sm:w-40"
           >
             Try it Now
           </Button>
