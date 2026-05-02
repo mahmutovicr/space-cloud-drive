@@ -1,39 +1,39 @@
 "use client";
 
-import { CustomFileUploader } from "~/components/uploadthing";
+import { FileRow } from "./file-row";
+import { SimpleUploadButton } from "~/components/uploadthing";
 
-export default function DriveContents(props: {
-  files: { id: string; name: string; size: string }[];
-  folders: { id: string; name: string }[];
-  currentFolderId: string;
-}) {
+export default function DriveContents(props: { contents: any[], folderId: number }) {
   return (
-    <div className="w-full px-4 sm:px-6 lg:px-8">
-      <div className="flex justify-start mb-6 border-b pb-2">
-        <CustomFileUploader />
+    <div className="w-full min-h-screen bg-[#0f1115] flex flex-col items-center p-4 md:p-12 lg:p-20">
+      {/* Breadcrumbs: My Drive > Root */}
+      <div className="w-full max-w-6xl mb-6 text-gray-500 text-sm px-2">
+         My Drive  &gt;  Root
       </div>
 
-      <div className="flex flex-col gap-4">
-        {props.folders.map((folder) => (
-          <div key={folder.id} className="flex items-center gap-3 p-2 hover:bg-zinc-50 rounded-lg transition-colors cursor-pointer">
-            <div className="text-2xl text-blue-500">📁</div>
-            <div className="flex flex-col leading-tight">
-              <span className="text-sm font-medium text-zinc-900">{folder.name}</span>
-              <span className="text-[10px] text-zinc-400 font-normal uppercase">Folder</span>
-            </div>
-          </div>
-        ))}
+      {/* Glavna tabela koja zauzima punu sirinu na desktopu */}
+      <div className="w-full max-w-6xl bg-[#16191f]/40 border border-gray-800 rounded-sm">
+        <div className="flex items-center justify-between px-8 py-4 border-b border-gray-800 text-gray-500 text-[11px] font-bold uppercase tracking-widest">
+          <span className="w-1/3">Name</span>
+          <span className="w-1/3 text-center">Type</span>
+          <span className="w-1/3 text-right">Size</span>
+        </div>
 
-        {props.files.map((file) => (
-          <div key={file.id} className="flex items-center gap-3 p-2 hover:bg-zinc-50 rounded-lg transition-colors border-b border-zinc-50">
-            <div className="text-2xl text-zinc-400">📄</div>
-            <div className="flex flex-col leading-tight">
-              <span className="text-sm font-medium text-zinc-900 truncate max-w-[200px] sm:max-w-md">{file.name}</span>
-              <span className="text-xs text-zinc-500 font-normal mt-0.5">{file.size}</span>
+        <div className="flex flex-col w-full">
+          {props.contents.map((item) => (
+            <FileRow key={item.id} file={item} />
+          ))}
+          
+          {props.contents.length === 0 && (
+            <div className="p-16 text-center text-gray-600 text-sm italic">
+              No items found in this directory.
             </div>
-          </div>
-        ))}
+          )}
+        </div>
       </div>
+
+      {/* Samo "Choose Files" opcija ispod tabele */}
+      <SimpleUploadButton folderId={props.folderId} />
     </div>
   );
 }
