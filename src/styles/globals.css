@@ -1,53 +1,14 @@
-@import "tailwindcss";
-
-@custom-variant dark (&:is(.dark *));
-
-@theme {
-  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
-  --radius: 0.5rem;
-  --color-background: hsl(0 0% 100%);
-  --color-foreground: hsl(0 0% 3.9%);
-  --color-primary: hsl(0 0% 9%);
-  --color-primary-foreground: hsl(0 0% 98%);
-  --color-secondary: hsl(0 0% 96.1%);
-  --color-secondary-foreground: hsl(0 0% 9%);
-  --color-muted: hsl(0 0% 96.1%);
-  --color-muted-foreground: hsl(0 0% 45.1%);
-  --color-accent: hsl(0 0% 96.1%);
-  --color-accent-foreground: hsl(0 0% 9%);
-  --color-destructive: hsl(0 84.2% 60.2%);
-  --color-destructive-foreground: hsl(0 0% 98%);
-  --color-border: hsl(0 0% 89.8%);
-  --color-input: hsl(0 0% 89.8%);
-  --color-ring: hsl(0 0% 3.9%);
-}
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
 
 @layer base {
-  *,
-  *::before,
-  *::after {
-    box-sizing: border-box;
-    border-color: var(--color-border);
-  }
-
-  html {
-    overflow-x: hidden;
-  }
-
-  body {
-    background-color: var(--color-background);
-    color: var(--color-foreground);
-    overflow-x: hidden;
+  html, body {
+    @apply w-full h-full m-0 p-0 overflow-x-hidden align-baseline bg-white text-black;
     -webkit-text-size-adjust: 100%;
-    text-size-adjust: 100%;
   }
 }
 
-.ut-button {
-  width: 100% !important;
-  max-width: 18rem !important;
-}
-
-.ut-label {
-  font-size: 0.875rem !important;
+input[type="file"] {
+  max-width: 100%;
 }
