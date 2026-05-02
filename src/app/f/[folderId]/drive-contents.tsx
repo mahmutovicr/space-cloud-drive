@@ -1,85 +1,38 @@
 "use client";
 
-import { ChevronRight } from "lucide-react";
-import { FileRow, FolderRow } from "./file-row";
-import type { files_table, folders_table } from "~/server/db/schema";
-import Link from "next/link";
-import { UploadButton } from "~/components/uploadthing";
-import { useRouter } from "next/navigation";
+import { CustomFileUploader } from "~/components/uploadthing";
 
 export default function DriveContents(props: {
-  files: (typeof files_table.$inferSelect)[];
-  folders: (typeof folders_table.$inferSelect)[];
-  parents: (typeof folders_table.$inferSelect)[];
-  currentFolderId: number;
+  files: { id: string; name: string; size: string }[];
+  folders: { id: string; name: string }[];
+  currentFolderId: string;
 }) {
-  const navigate = useRouter();
-
   return (
-    <div className="min-h-screen bg-gray-900 p-4 text-gray-100 sm:p-6 md:p-8">
-      <div className="mx-auto max-w-6xl">
-        <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-          <div className="flex min-w-0 items-center gap-1 overflow-x-auto whitespace-nowrap pb-1 sm:pb-0">
-            <Link
-              href="/drive"
-              className="shrink-0 text-sm text-gray-300 hover:text-white sm:text-base"
-            >
-              My Drive
-            </Link>
-            {props.parents.map((folder) => (
-              <div key={folder.id} className="flex shrink-0 items-center">
-                <ChevronRight className="mx-1 shrink-0 text-gray-500" size={14} />
-                <Link
-                  href={`/f/${folder.id}`}
-                  className="text-sm text-gray-300 hover:text-white sm:text-base"
-                >
-                  {folder.name}
-                </Link>
-              </div>
-            ))}
-          </div>
+    <div className="w-full px-4 sm:px-6 lg:px-8">
+      <div className="flex justify-start mb-6 border-b pb-2">
+        <CustomFileUploader />
+      </div>
 
-          <div className="self-start sm:self-auto">
-            <span className="rounded-full bg-neutral-700 px-3 py-1 text-xs text-neutral-300">
-              Demo
-            </span>
-          </div>
-        </div>
-
-        <div className="rounded-lg bg-gray-800 shadow-xl">
-          <div className="hidden border-b border-gray-700 px-6 py-4 sm:block">
-            <div className="grid grid-cols-12 gap-4 text-sm font-medium text-gray-400">
-              <div className="col-span-6">Name</div>
-              <div className="col-span-2">Type</div>
-              <div className="col-span-3">Size</div>
-              <div className="col-span-1"></div>
+      <div className="flex flex-col gap-4">
+        {props.folders.map((folder) => (
+          <div key={folder.id} className="flex items-center gap-3 p-2 hover:bg-zinc-50 rounded-lg transition-colors cursor-pointer">
+            <div className="text-2xl text-blue-500">📁</div>
+            <div className="flex flex-col leading-tight">
+              <span className="text-sm font-medium text-zinc-900">{folder.name}</span>
+              <span className="text-[10px] text-zinc-400 font-normal uppercase">Folder</span>
             </div>
           </div>
+        ))}
 
-          <ul>
-            {props.folders.map((folder) => (
-              <FolderRow key={folder.id} folder={folder} />
-            ))}
-            {props.files.map((file) => (
-              <FileRow key={file.id} file={file} />
-            ))}
-            {props.folders.length === 0 && props.files.length === 0 && (
-              <li className="px-6 py-12 text-center text-sm text-gray-500">
-                This folder is empty
-              </li>
-            )}
-          </ul>
-        </div>
-
-        <div className="mt-6 flex justify-center sm:justify-start">
-          <UploadButton
-            endpoint="driveUploader"
-            onClientUploadComplete={() => {
-              navigate.refresh();
-            }}
-            input={{ folderId: props.currentFolderId }}
-          />
-        </div>
+        {props.files.map((file) => (
+          <div key={file.id} className="flex items-center gap-3 p-2 hover:bg-zinc-50 rounded-lg transition-colors border-b border-zinc-50">
+            <div className="text-2xl text-zinc-400">📄</div>
+            <div className="flex flex-col leading-tight">
+              <span className="text-sm font-medium text-zinc-900 truncate max-w-[200px] sm:max-w-md">{file.name}</span>
+              <span className="text-xs text-zinc-500 font-normal mt-0.5">{file.size}</span>
+            </div>
+          </div>
+        ))}
       </div>
     </div>
   );
