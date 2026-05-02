@@ -1,12 +1,11 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
 
 body {
   @apply bg-[#0f1115] text-white antialiased;
   margin: 0;
   padding: 0;
   width: 100%;
+  min-height: 100vh;
 }
 
 main {
