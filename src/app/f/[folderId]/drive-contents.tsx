@@ -63,6 +63,13 @@ export default function DriveContents(props: {
             endpoint="driveUploader"
             onClientUploadComplete={() => { navigate.refresh(); }}
             input={{ folderId: props.currentFolderId }}
+            content={{
+              button: "Choose Files",
+              allowedContent: "",
+            }}
+            appearance={{
+              allowedContent: { display: "none" },
+            }}
           />
         </div>
       </div>
