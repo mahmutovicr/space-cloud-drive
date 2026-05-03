@@ -1,18 +1,33 @@
 @import "tailwindcss";
 
-body {
-  @apply bg-[#0f1115] text-white antialiased;
-  margin: 0;
-  padding: 0;
-  width: 100%;
-  min-height: 100vh;
+@custom-variant dark (&:is(.dark *));
+
+@theme {
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --radius: 0.5rem;
+  --color-background: hsl(0 0% 100%);
+  --color-foreground: hsl(0 0% 3.9%);
+  --color-primary: hsl(0 0% 9%);
+  --color-primary-foreground: hsl(0 0% 98%);
+  --color-secondary: hsl(0 0% 96.1%);
+  --color-secondary-foreground: hsl(0 0% 9%);
+  --color-muted: hsl(0 0% 96.1%);
+  --color-muted-foreground: hsl(0 0% 45.1%);
+  --color-accent: hsl(0 0% 96.1%);
+  --color-accent-foreground: hsl(0 0% 9%);
+  --color-destructive: hsl(0 84.2% 60.2%);
+  --color-destructive-foreground: hsl(0 0% 98%);
+  --color-border: hsl(0 0% 89.8%);
+  --color-input: hsl(0 0% 89.8%);
+  --color-ring: hsl(0 0% 3.9%);
 }
 
-main {
-  width: 100%;
-}
-
-.container {
-  max-width: none !important;
-  width: 100% !important;
+@layer base {
+  * {
+    border-color: var(--color-border);
+  }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
 }

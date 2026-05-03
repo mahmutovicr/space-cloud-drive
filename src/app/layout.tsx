@@ -1,31 +1,23 @@
 import "~/styles/globals.css";
-import { type Metadata, type Viewport } from "next";
-import { ClerkProvider } from "@clerk/nextjs";
+
+import { GeistSans } from "geist/font/sans";
+import { type Metadata } from "next";
+import { PostHogProvider } from "./_providers/posthog-provider";
 
 export const metadata: Metadata = {
-  title: "Space Cloud Drive",
-  icons: [{ rel: "icon", url: "/favicon.svg" }],
-};
-
-export const viewport: Viewport = {
-  width: "device-width",
-  initialScale: 1,
-  maximumScale: 1,
-  userScalable: false,
+  title: "Space",
+  description: "Secure, fast and easy file storage for the modern web",
+  icons: [{ rel: "icon", url: "/favicon.svg", type: "image/svg+xml" }],
 };
 
 export default function RootLayout({
   children,
-}: {
-  children: React.ReactNode;
-}) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
-    <ClerkProvider>
-      <html lang="en">
-        <body className="font-sans antialiased bg-white text-black overflow-x-hidden">
-          {children}
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en" className={`${GeistSans.variable}`}>
+      <body>
+        <PostHogProvider>{children}</PostHogProvider>
+      </body>
+    </html>
   );
 }

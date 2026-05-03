@@ -38,11 +38,8 @@ export const QUERIES = {
         throw new Error("Parent folder not found");
       }
 
-      if (folder[0].parent !== null) {
-        parents.unshift(folder[0]);
-      }
-
-      currentId = folder[0].parent ?? null;
+      parents.unshift(folder[0]);
+      currentId = folder[0]?.parent ?? null;
     }
 
     return parents;

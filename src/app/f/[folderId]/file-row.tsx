@@ -1,32 +1,54 @@
-import { FileIcon, FolderIcon } from "lucide-react";
+"use client";
+import { Folder as FolderIcon, FileIcon, Trash2Icon } from "lucide-react";
 import Link from "next/link";
+import { Button } from "~/components/ui/button";
+import { deleteFile } from "~/server/actions";
+import type { folders_table, files_table } from "~/server/db/schema";
+import { useRouter } from "next/navigation";
 
-export function FileRow(props: { file: any }) {
+export function FileRow(props: { file: typeof files_table.$inferSelect }) {
   const { file } = props;
+  const router = useRouter();
+
+  async function handleDelete() {
+    await deleteFile(file.id);
+    router.refresh();
+  }
 
   return (
-    <div className="flex items-center justify-between px-8 py-4 hover:bg-[#1c2027]/50 border-b border-gray-800 transition-all w-full group">
-      <div className="flex items-center gap-4 w-1/3">
-        {file.type === "folder" ? (
-          <Link href={`/f/${file.id}`} className="flex items-center gap-4 group-hover:text-blue-400 transition-colors">
-            <FolderIcon className="text-gray-500" size={18} />
-            <span className="text-gray-300 font-medium">{file.name}</span>
+    <li className="border-b border-gray-700 px-6 py-4">
+      <div className="grid grid-cols-12 items-center gap-4">
+        <div className="col-span-6 flex items-center">
+          <a href={file.url} className="flex items-center text-gray-100 hover:text-blue-400" target="_blank" rel="noreferrer">
+            <FileIcon className="mr-3" size={20} />{file.name}
+          </a>
+        </div>
+        <div className="col-span-2 text-gray-400">file</div>
+        <div className="col-span-3 text-gray-400">{file.size} B</div>
+        <div className="col-span-1 text-gray-400">
+          <Button variant="ghost" onClick={handleDelete} aria-label="Delete file">
+            <Trash2Icon size={20} />
+          </Button>
+        </div>
+      </div>
+    </li>
+  );
+}
+
+export function FolderRow(props: { folder: typeof folders_table.$inferSelect }) {
+  const { folder } = props;
+  return (
+    <li className="border-b border-gray-700 px-6 py-4">
+      <div className="grid grid-cols-12 items-center gap-4">
+        <div className="col-span-6 flex items-center">
+          <Link href={`/f/${folder.id}`} className="flex items-center text-gray-100 hover:text-blue-400">
+            <FolderIcon className="mr-3" size={20} />{folder.name}
           </Link>
-        ) : (
-          <div className="flex items-center gap-4">
-            <FileIcon className="text-gray-500" size={18} />
-            <span className="text-gray-300 font-medium">{file.name}</span>
-          </div>
-        )}
+        </div>
+        <div className="col-span-2 text-gray-400">folder</div>
+        <div className="col-span-3 text-gray-400"></div>
+        <div className="col-span-1"></div>
       </div>
-
-      <div className="w-1/3 text-center text-gray-600 text-sm font-sans uppercase tracking-tight">
-        {file.type === "folder" ? "folder" : "file"}
-      </div>
-
-      <div className="w-1/3 text-right text-gray-600 text-sm tabular-nums font-sans">
-        {file.type === "file" ? file.size : ""}
-      </div>
-    </div>
+    </li>
   );
 }
