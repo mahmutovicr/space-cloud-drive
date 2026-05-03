@@ -4,7 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { FileRow, FolderRow } from "./file-row";
 import type { files_table, folders_table } from "~/server/db/schema";
 import Link from "next/link";
-import { UploadButton } from "~/components/uploadthing";
+import { useUploadThing } from "~/components/uploadthing";
 import { useRouter } from "next/navigation";
 
 export default function DriveContents(props: {
@@ -14,6 +14,10 @@ export default function DriveContents(props: {
   currentFolderId: number;
 }) {
   const navigate = useRouter();
+
+  const { startUpload } = useUploadThing("driveUploader", {
+    onClientUploadComplete: () => navigate.refresh(),
+  });
 
   return (
     <div className="min-h-screen bg-gray-900 p-8 text-gray-100">
@@ -59,19 +63,20 @@ export default function DriveContents(props: {
         </div>
 
         <div className="mt-6">
-          <UploadButton
-            endpoint="driveUploader"
-            onClientUploadComplete={() => { navigate.refresh(); }}
-            input={{ folderId: props.currentFolderId }}
-            content={{
-              button: "Choose Files",
-              allowedContent: "",
-            }}
-            appearance={{
-              allowedContent: { display: "none" },
-              container: { justifyContent: "center" },
-            }}
-          />
+          <label className="cursor-pointer text-sm text-gray-300 hover:text-white">
+            Choose Files
+            <input
+              type="file"
+              multiple
+              className="hidden"
+              onChange={(e) => {
+                const files = Array.from(e.target.files ?? []);
+                if (files.length > 0) {
+                  void startUpload(files, { folderId: props.currentFolderId });
+                }
+              }}
+            />
+          </label>
         </div>
       </div>
     </div>
