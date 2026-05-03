@@ -8,6 +8,7 @@ export const metadata: Metadata = {
   title: "Space",
   description: "Secure, fast and easy file storage for the modern web",
   icons: [{ rel: "icon", url: "/favicon.svg", type: "image/svg+xml" }],
+  viewport: "width=device-width, initial-scale=1",
 };
 
 export default function RootLayout({
