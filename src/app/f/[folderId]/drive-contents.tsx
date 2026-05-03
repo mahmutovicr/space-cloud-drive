@@ -69,6 +69,7 @@ export default function DriveContents(props: {
             }}
             appearance={{
               allowedContent: { display: "none" },
+              container: { justifyContent: "center" },
             }}
           />
         </div>
