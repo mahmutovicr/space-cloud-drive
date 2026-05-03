@@ -67,7 +67,7 @@ export default function DriveContents(props: {
             <div className="col-span-6"></div>
             <div className="col-span-2"></div>
             <div className="col-span-3">
-              <label className="cursor-pointer text-sm text-gray-300 hover:text-white">
+              <label className="cursor-pointer text-base text-gray-300 hover:text-white">
                 Choose Files
                 <input
                   type="file"
