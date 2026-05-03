@@ -18,9 +18,10 @@ export function FileRow(props: { file: typeof files_table.$inferSelect }) {
   return (
     <li className="border-b border-gray-700 px-6 py-4">
       <div className="grid grid-cols-12 items-center gap-4">
-        <div className="col-span-6 flex items-center">
-          <a href={file.url} className="flex items-center text-gray-100 hover:text-blue-400" target="_blank" rel="noreferrer">
-            <FileIcon className="mr-3" size={20} />{file.name}
+        <div className="col-span-6 flex items-center min-w-0">
+          <a href={file.url} className="flex items-center text-gray-100 hover:text-blue-400 truncate" target="_blank" rel="noreferrer">
+            <FileIcon className="mr-3 shrink-0" size={20} />
+            <span className="truncate">{file.name}</span>
           </a>
         </div>
         <div className="col-span-2 text-gray-400">file</div>
@@ -40,9 +41,10 @@ export function FolderRow(props: { folder: typeof folders_table.$inferSelect }) 
   return (
     <li className="border-b border-gray-700 px-6 py-4">
       <div className="grid grid-cols-12 items-center gap-4">
-        <div className="col-span-6 flex items-center">
-          <Link href={`/f/${folder.id}`} className="flex items-center text-gray-100 hover:text-blue-400">
-            <FolderIcon className="mr-3" size={20} />{folder.name}
+        <div className="col-span-6 flex items-center min-w-0">
+          <Link href={`/f/${folder.id}`} className="flex items-center text-gray-100 hover:text-blue-400 truncate">
+            <FolderIcon className="mr-3 shrink-0" size={20} />
+            <span className="truncate">{folder.name}</span>
           </Link>
         </div>
         <div className="col-span-2 text-gray-400">folder</div>
