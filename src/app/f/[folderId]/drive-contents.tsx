@@ -62,21 +62,28 @@ export default function DriveContents(props: {
           </ul>
         </div>
 
-        <div className="mt-6">
-          <label className="cursor-pointer text-sm text-gray-300 hover:text-white">
-            Choose Files
-            <input
-              type="file"
-              multiple
-              className="hidden"
-              onChange={(e) => {
-                const files = Array.from(e.target.files ?? []);
-                if (files.length > 0) {
-                  void startUpload(files, { folderId: props.currentFolderId });
-                }
-              }}
-            />
-          </label>
+        <div className="mt-4 px-6">
+          <div className="grid grid-cols-12 gap-4">
+            <div className="col-span-6"></div>
+            <div className="col-span-2"></div>
+            <div className="col-span-3">
+              <label className="cursor-pointer text-sm text-gray-300 hover:text-white">
+                Choose Files
+                <input
+                  type="file"
+                  multiple
+                  className="hidden"
+                  onChange={(e) => {
+                    const files = Array.from(e.target.files ?? []);
+                    if (files.length > 0) {
+                      void startUpload(files, { folderId: props.currentFolderId });
+                    }
+                  }}
+                />
+              </label>
+            </div>
+            <div className="col-span-1"></div>
+          </div>
         </div>
       </div>
     </div>
