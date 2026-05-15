@@ -24,7 +24,7 @@ const conn =
     keepAliveInitialDelay: 10000,
   });
 
-if (env.NODE_ENV !== "production") globalForDb.conn = conn;
+globalForDb.conn = conn;
 
 conn.addListener("error", (err) => {
   console.error("Database connection error:", err);
