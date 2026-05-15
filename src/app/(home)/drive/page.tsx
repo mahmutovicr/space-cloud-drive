@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import { redirect } from "next/navigation";
 import { MUTATIONS, QUERIES } from "~/server/db/queries";
 import { DEMO_USER_ID } from "~/lib/mock-data";
