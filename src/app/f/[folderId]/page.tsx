@@ -1,3 +1,5 @@
+export const dynamic = "force-dynamic";
+
 import DriveContents from "./drive-contents";
 import { QUERIES } from "~/server/db/queries";
 
