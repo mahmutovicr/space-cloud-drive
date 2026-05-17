@@ -1,27 +1,25 @@
 import {
-  int,
+  integer,
   text,
   index,
-  singlestoreTableCreator,
-  bigint,
+  pgTableCreator,
+  bigserial,
   timestamp,
-} from "drizzle-orm/singlestore-core";
+} from "drizzle-orm/pg-core";
 
-export const createTable = singlestoreTableCreator(
+export const createTable = pgTableCreator(
   (name) => `space_cloud_drive_${name}`,
 );
 
 export const files_table = createTable(
   "files_table",
   {
-    id: bigint("id", { mode: "number", unsigned: true })
-      .primaryKey()
-      .autoincrement(),
+    id: bigserial("id", { mode: "number" }).primaryKey(),
     ownerId: text("owner_id").notNull(),
     name: text("name").notNull(),
-    size: int("size").notNull(),
+    size: integer("size").notNull(),
     url: text("url").notNull(),
-    parent: bigint("parent", { mode: "number", unsigned: true }).notNull(),
+    parent: integer("parent").notNull(),
     createdAt: timestamp("created_at").notNull().defaultNow(),
   },
   (t) => [
@@ -35,12 +33,10 @@ export type DB_FileType = typeof files_table.$inferSelect;
 export const folders_table = createTable(
   "folders_table",
   {
-    id: bigint("id", { mode: "number", unsigned: true })
-      .primaryKey()
-      .autoincrement(),
+    id: bigserial("id", { mode: "number" }).primaryKey(),
     ownerId: text("owner_id").notNull(),
     name: text("name").notNull(),
-    parent: bigint("parent", { mode: "number", unsigned: true }),
+    parent: integer("parent"),
     createdAt: timestamp("created_at").notNull().defaultNow(),
   },
   (t) => [
