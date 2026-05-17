@@ -1,7 +1,7 @@
 "use server";
 
 import { eq } from "drizzle-orm";
-import { db } from "./db";
+import { getDb } from "./db";
 import { files_table } from "./db/schema";
 import { UTApi } from "uploadthing/server";
 import { cookies } from "next/headers";
@@ -10,6 +10,8 @@ const utApi = new UTApi();
 const DEMO_USER_ID = "demo_developer_user";
 
 export async function deleteFile(fileId: number) {
+  const db = await getDb();
+
   const [file] = await db
     .select()
     .from(files_table)
