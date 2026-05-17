@@ -39,7 +39,7 @@ export default function HomePage() {
       </p>
 
       <div className="flex flex-col items-center gap-3">
-        <a href="https://amusing-tarpon-96.accounts.dev/sign-in">
+        <a href="https://amusing-tarpon-96.accounts.dev/sign-in?redirect_url=https://space-cloud-drive.vercel.app/drive">
           <Button
             size="lg"
             className="w-40 border border-neutral-700 bg-neutral-800 text-white transition-colors hover:bg-neutral-700"
