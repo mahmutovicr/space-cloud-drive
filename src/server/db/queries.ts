@@ -9,7 +9,7 @@ import { eq, isNull, and } from "drizzle-orm";
 
 export const QUERIES = {
   getFolders: async function (folderId: number) {
-    const db = await getDb();
+    const db = getDb();
     return db
       .select()
       .from(foldersSchema)
@@ -18,7 +18,7 @@ export const QUERIES = {
   },
 
   getFiles: async function (folderId: number) {
-    const db = await getDb();
+    const db = getDb();
     return db
       .select()
       .from(filesSchema)
@@ -27,7 +27,7 @@ export const QUERIES = {
   },
 
   getAllParentsForFolder: async function (folderId: number) {
-    const db = await getDb();
+    const db = getDb();
     const parents = [];
     let currentId: number | null = folderId;
 
@@ -49,7 +49,7 @@ export const QUERIES = {
   },
 
   getFolderById: async function (folderId: number) {
-    const db = await getDb();
+    const db = getDb();
     const folder = await db
       .select()
       .from(foldersSchema)
@@ -58,7 +58,7 @@ export const QUERIES = {
   },
 
   getRootFolderForUser: async function (userId: string) {
-    const db = await getDb();
+    const db = getDb();
     const folder = await db
       .select()
       .from(foldersSchema)
@@ -82,7 +82,7 @@ export const MUTATIONS = {
     };
     userId: string;
   }) {
-    const db = await getDb();
+    const db = getDb();
     return await db.insert(filesSchema).values({
       ...input.file,
       ownerId: input.userId,
@@ -90,7 +90,8 @@ export const MUTATIONS = {
   },
 
   onboardUser: async function (userId: string) {
-    const db = await getDb();
+    const db = getDb();
+
     const rootFolder = await db
       .insert(foldersSchema)
       .values({
@@ -98,7 +99,7 @@ export const MUTATIONS = {
         parent: null,
         ownerId: userId,
       })
-      .$returningId();
+      .returning({ id: foldersSchema.id });
 
     const rootFolderId = rootFolder[0]!.id;
 
