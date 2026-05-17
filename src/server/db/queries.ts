@@ -1,6 +1,6 @@
 import "server-only";
 
-import { db } from "~/server/db";
+import { getDb } from "~/server/db";
 import {
   files_table as filesSchema,
   folders_table as foldersSchema,
@@ -8,7 +8,8 @@ import {
 import { eq, isNull, and } from "drizzle-orm";
 
 export const QUERIES = {
-  getFolders: function (folderId: number) {
+  getFolders: async function (folderId: number) {
+    const db = await getDb();
     return db
       .select()
       .from(foldersSchema)
@@ -16,7 +17,8 @@ export const QUERIES = {
       .orderBy(foldersSchema.id);
   },
 
-  getFiles: function (folderId: number) {
+  getFiles: async function (folderId: number) {
+    const db = await getDb();
     return db
       .select()
       .from(filesSchema)
@@ -25,6 +27,7 @@ export const QUERIES = {
   },
 
   getAllParentsForFolder: async function (folderId: number) {
+    const db = await getDb();
     const parents = [];
     let currentId: number | null = folderId;
 
@@ -46,6 +49,7 @@ export const QUERIES = {
   },
 
   getFolderById: async function (folderId: number) {
+    const db = await getDb();
     const folder = await db
       .select()
       .from(foldersSchema)
@@ -54,6 +58,7 @@ export const QUERIES = {
   },
 
   getRootFolderForUser: async function (userId: string) {
+    const db = await getDb();
     const folder = await db
       .select()
       .from(foldersSchema)
@@ -77,6 +82,7 @@ export const MUTATIONS = {
     };
     userId: string;
   }) {
+    const db = await getDb();
     return await db.insert(filesSchema).values({
       ...input.file,
       ownerId: input.userId,
@@ -84,6 +90,7 @@ export const MUTATIONS = {
   },
 
   onboardUser: async function (userId: string) {
+    const db = await getDb();
     const rootFolder = await db
       .insert(foldersSchema)
       .values({
